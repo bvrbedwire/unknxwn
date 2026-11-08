@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#060708">
+  <meta name="description" content="GIT account sign-in interface.">
+  <title>GIT / Sign in</title>
+  <style>
+    :root {
+      --background: #060708;
+      --surface: #101215;
+      --stroke: #414852;
+      --muted: #939ba4;
+      --text: #e3e7ea;
+      --accent: #b5d6ee;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Tahoma, Verdana, Arial, sans-serif;
+      font-size: 12px;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: #a4c8e6; text-underline-offset: 3px; }
+    a:hover { color: #e0effb; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    ::selection { background: #9ec8e4; color: #070b10; }
+
+    .wrap {
+      width: min(418px, calc(100% - 38px));
+      margin: 0 auto;
+      padding: clamp(72px, 16vh, 146px) 0 55px;
+    }
+    .brand {
+      display: flex;
+      align-items: end;
+      gap: 17px;
+      margin-bottom: 29px;
+    }
+    .brand-name {
+      font-family: "Arial Black", Arial, sans-serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: 80px;
+      line-height: .87;
+      letter-spacing: -.115em;
+      padding-right: .14em;
+      background: linear-gradient(to bottom, #fafafa 8%, #b1b8bf 46%, #edf0f2 51%, #7e8a95 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-detail {
+      padding: 0 0 6px 12px;
+      border-left: 1px solid #444950;
+      color: #9ca3aa;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 10px;
+      line-height: 1.55;
+      letter-spacing: .02em;
+    }
+
+    .window {
+      border: 1px solid #777f87;
+      background: #0e1012;
+      box-shadow: 2px 2px 0 #25282c, 3px 3px 0 #050505;
+    }
+    .window-bar {
+      height: 30px;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid #363c44;
+      background: linear-gradient(#a6afb9 0%, #7c8793 48%, #5f6b76 49%, #808c96 100%);
+      color: #10161b;
+      text-shadow: 0 1px rgba(255,255,255,.27);
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: .04em;
+    }
+    .window-icon {
+      width: 11px;
+      height: 11px;
+      display: inline-block;
+      margin-right: 7px;
+      vertical-align: -1px;
+      border: 1px solid #314457;
+      background: linear-gradient(135deg, #e6f2fc, #7196b1);
+      box-shadow: inset 1px 1px rgba(255,255,255,.65);
+    }
+    .window-buttons { display: flex; gap: 4px; }
+    .window-buttons span {
+      width: 10px;
+      height: 10px;
+      display: block;
+      border: 1px solid #46515c;
+      background: linear-gradient(#cad1d6, #7e8992);
+      box-shadow: inset 1px 1px rgba(255,255,255,.55);
+    }
+    .window-inner { padding: 28px 29px 27px; }
+    h1 { font-size: 22px; font-weight: normal; letter-spacing: -.04em; margin: 0 0 7px; }
+    .subheading { color: var(--muted); margin: 0 0 30px; line-height: 1.5; }
+    .field { margin-bottom: 18px; }
+    label.field-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 11px;
+      color: #c9cfd4;
+    }
+    .field input {
+      width: 100%;
+      height: 40px;
+      border-radius: 0;
+      border: 1px solid #515860;
+      border-top-color: #272c32;
+      border-left-color: #272c32;
+      background: #07090b;
+      box-shadow: inset 1px 1px 2px #030405;
+      color: #f1f4f6;
+      padding: 0 11px;
+      outline-offset: 2px;
+    }
+    .field input::placeholder { color: #68727b; opacity: 1; }
+    .field input:focus { border-color: #93bad6; outline: 1px solid #93bad6; }
+    .password-wrap { position: relative; }
+    .password-wrap input { padding-right: 62px; }
+    .show-password {
+      position: absolute;
+      right: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 5px 2px;
+      color: #9da7af;
+      border: 0;
+      background: transparent;
+      font: 10px Tahoma, Verdana, sans-serif;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .show-password:hover { color: #e0effb; }
+    .options { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 4px 0 25px; }
+    .remember { display: inline-flex; align-items: center; gap: 7px; color: #b6bec4; cursor: pointer; font-size: 11px; }
+    .remember input { margin: 0; accent-color: #9fbdd1; width: 13px; height: 13px; }
+    .options a { font-size: 11px; }
+    .submit {
+      width: 100%;
+      height: 40px;
+      border: 1px solid #b7c9d7;
+      border-bottom-color: #506579;
+      color: #0d1821;
+      background: linear-gradient(#d0dce5 0%, #a8bfd1 48%, #7d9bb1 49%, #8eabbe 100%);
+      box-shadow: inset 1px 1px rgba(255,255,255,.7), inset -1px -1px rgba(0,0,0,.15);
+      text-shadow: 0 1px rgba(255,255,255,.3);
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .submit:hover { filter: brightness(1.09); }
+    .submit:active { background: linear-gradient(#7896ad, #bdcfdd); box-shadow: inset 1px 2px 3px #41576a; }
+    .message {
+      display: none;
+      margin: 16px 0 0;
+      padding: 11px;
+      border: 1px solid #475a68;
+      color: #bfd5e5;
+      background: #151e25;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+    .message.visible { display: block; }
+
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding-top: 18px;
+      color: #777f86;
+      font: 10px/1.5 "Courier New", Courier, monospace;
+    }
+    .foot a { color: #929ba3; text-decoration: none; }
+    .foot a:hover { color: #d1dfeb; text-decoration: underline; }
+    @media (max-width: 420px) {
+      .wrap { padding-top: 80px; }
+      .brand-name { font-size: 69px; }
+      .window-inner { padding: 25px 21px; }
+      .options { flex-wrap: wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="brand" aria-label="GIT">
+      <div class="brand-name" aria-hidden="true">git</div>
+      <div class="brand-detail">REPOSITORY<br>ACCESS</div>
+    </div>
+
+    <section class="window" aria-labelledby="signin-title">
+      <div class="window-bar">
+        <span><span class="window-icon" aria-hidden="true"></span>GIT / ACCOUNT LOGIN</span>
+        <span class="window-buttons" aria-hidden="true"><span></span><span></span></span>
+      </div>
+      <div class="window-inner">
+        <h1 id="signin-title">Sign in</h1>
+        <p class="subheading">Enter your details to continue.</p>
+
+        <form id="login-form">
+          <div class="field">
+            <label class="field-label" for="username">Email or username</label>
+            <input id="username" name="username" type="text" placeholder="Your account" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+          </div>
+          <div class="field">
+            <label class="field-label" for="password">Password</label>
+            <div class="password-wrap">
+              <input id="password" name="password" type="password" placeholder="Your password" autocomplete="current-password" required>
+              <button id="toggle-password" class="show-password" type="button" aria-label="Show password" aria-pressed="false">Show</button>
+            </div>
+          </div>
+          <div class="options">
+            <label class="remember"><input type="checkbox" name="remember"> Remember me</label>
+            <a id="forgot" href="#">Forgot password?</a>
+          </div>
+          <button class="submit" type="submit">SIGN IN</button>
+          <p id="message" class="message" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+    <footer class="foot">
+      <span>GIT / ACCESS</span>
+      <a href="https://git-scm.com/doc" target="_blank" rel="noopener noreferrer">Documentation</a>
+    </footer>
+  </main>
+  <script>
+    // Front-end demonstration only: credentials are never sent or stored.
+    const password = document.getElementById('password');
+    const toggle = document.getElementById('toggle-password');
+    const message = document.getElementById('message');
+
+    toggle.addEventListener('click', function () {
+      const visible = password.type === 'password';
+      password.type = visible ? 'text' : 'password';
+      toggle.textContent = visible ? 'Hide' : 'Show';
+      toggle.setAttribute('aria-label', visible ? 'Hide password' : 'Show password');
+      toggle.setAttribute('aria-pressed', String(visible));
+    });
+
+    document.getElementById('login-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      message.textContent = 'This is a front-end preview. Sign-in requires a connected authentication service.';
+      message.classList.add('visible');
+    });
+
+    document.getElementById('forgot').addEventListener('click', function (event) {
+      event.preventDefault();
+      message.textContent = 'Password recovery is not available in this preview.';
+      message.classList.add('visible');
+    });
+  </script>
+</body>
+</html>

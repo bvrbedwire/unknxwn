@@ -1,0 +1,1 @@
+Revise the script to perform a higher-quality, more modern server setup. Ensure that configuration files for Hysteria are created by default, and configure XHTTP and Trojan using more up-to-date methods—all while ensuring that everything remains functional from within Russia.
