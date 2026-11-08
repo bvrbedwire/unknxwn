@@ -85,20 +85,6 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/bvrbedwire/unknxw
 | `-clash` | 0-3 | clash meta config: 0 ru-bundle, 1 skrepysh, 2 fullproxy without RU, 3 re-filter ECH |
 | `-uninstall` | yes | full uninstall |
 
-## Why it works from Russia
-
-- **Hysteria2 + salamander** — UDP-based QUIC with per-packet obfuscation; not
-  pattern-matched like raw TLS proxies.
-- **XHTTP `mode: auto`** — the modern xray-core transport that survives DPI
-  middleboxes better than WS/gRPC (both deprecated upstream), with xPadding
-  against packet-size fingerprinting.
-- **REALITY with post-quantum x25519mlkem768** — masquerades as a normal TLS
-  site to the REALITY domain.
-- **WARP egress** — outbound traffic leaves via Cloudflare IPs; the origin IP is
-  never exposed to the sites clients visit.
-- **Masquerade everywhere** — the same GIT sign-in page is served by nginx (the
-  REALITY fallback, port 443) and by Hysteria2 over HTTP/3.
-
 ## Firewall & tuning
 
 ufw: 22, 80, 443/tcp, 443/udp + the random Hysteria2 UDP port. BBR congestion
