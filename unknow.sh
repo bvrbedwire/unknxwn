@@ -648,7 +648,7 @@ if [[ -f $XUIDB ]]; then
       "totalGB": 0,
       "expiryTime": 0,
       "enable": true,
-      "tgId": "",
+      "tgId": 0,
       "subId": "first",
       "reset": 0,
       "created_at": 1756726925000,
@@ -659,7 +659,7 @@ if [[ -f $XUIDB ]]; then
   "decryption": "none",
   "fallbacks": []
 }',
-	     '{
+'{
   "network": "tcp",
   "security": "reality",
   "externalProxy": [
@@ -739,7 +739,7 @@ if [[ -f $XUIDB ]]; then
       "totalGB": 0,
       "expiryTime": 0,
       "enable": true,
-      "tgId": "",
+      "tgId": 0,
       "subId": "first",
       "reset": 0,
       "created_at": 1756726925000,
@@ -801,7 +801,7 @@ if [[ -f $XUIDB ]]; then
       "totalGB": 0,
       "expiryTime": 0,
       "enable": true,
-      "tgId": "",
+      "tgId": 0,
       "subId": "first",
       "reset": 0,
 	  "created_at": 1756726925000,

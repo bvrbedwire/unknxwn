@@ -1,3 +1,8 @@
+v0.4.1 (bugfix)
+fix panel error "Something went wrong (inbound N: json: cannot unmarshal string into Go
+  struct field .0.tgId of type int64)" when adding a client: seeded vless inbound
+  settings had "tgId": "" (string) but the panel expects an int64 — now seeded as
+  "tgId": 0 for reality/ws/xhttp inbounds (trojan/hysteria were already correct)
 v0.4 (major modernization)
 install latest 3x-ui dynamically (v3.11.0+ with Xray-core 26.x) instead of pinned v2.9.4
 Hysteria2 inbound created by default: native 3x-ui hysteria inbound (version 2, UDP),
