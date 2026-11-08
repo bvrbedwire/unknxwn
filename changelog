@@ -6,7 +6,7 @@ fix panel error "Something went wrong (inbound N: json: cannot unmarshal string 
 v0.4 (major modernization)
 install latest 3x-ui dynamically (v3.11.0+ with Xray-core 26.x) instead of pinned v2.9.4
 Hysteria2 inbound created by default: native 3x-ui hysteria inbound (version 2, UDP),
-  TLS alpn h3, salamander obfs via finalmask (RU DPI resistance), masquerade serves the fake site over HTTP/3
+  TLS alpn h3, salamander obfs via finalmask, masquerade serves the fallback site over HTTP/3
   (clients land in the normalized tables clients + client_inbounds, which v3 builds the running config from)
 WARP for all inbound connections: WARP device registered via api.cloudflareclient.com,
   warp wireguard outbound installed as the FIRST (default) outbound in xrayTemplateConfig;
@@ -30,9 +30,9 @@ fix sub2sing-box run only localhost
 v0.2
 add new sub page based on https://github.com/streletskiy/marzban-sub-page
 for install classic web sub page use option: -websub 1
-add clash meta config with ru-bundle
+add clash meta config variant (bundle)
 for clash meta config by skrepysh use option: -clash 1
-for clash meta config with fullproxy without ru use option: -clash 2
+for clash meta config with fullproxy (ex-bundle) use option: -clash 2
 change sub2sing-box to fork by legiz
 add link local instance sub2sing-box to output after install
 xhttp packet-up mode

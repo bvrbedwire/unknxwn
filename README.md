@@ -1,6 +1,6 @@
-# unknow
+# unknxwn
 
-Modern, RU-resistant proxy server setup: **latest 3x-ui** (installed dynamically from the newest release, v3.11.0+ with Xray-core 26.x) behind **nginx**, with **WARP egress for all inbound connections**.
+Modern multi-user proxy server setup: **latest 3x-ui** (installed dynamically from the newest release, v3.11.0+ with Xray-core 26.x) behind **nginx**, with **WARP egress for all inbound connections**.
 
 Everything is configured automatically by a single script — panel, SSL, nginx SNI-routing, inbounds, subscriptions, masquerade site, WARP.
 
@@ -23,13 +23,13 @@ Everything is configured automatically by a single script — panel, SSL, nginx 
 | WS | VLESS over WebSocket | legacy fallback, behind nginx on 443 |
 | XHTTP | VLESS over **XHTTP** (`mode: auto`, `noGRPCHeader`, xPadding `100-1000`) | modern xray-core transport, plain HTTP/1.1 uplink via nginx |
 | Trojan-XHTTP | Trojan over **XHTTP** | modern replacement for trojan-grpc (gRPC transport is deprecated) |
-| **Hysteria2** | native 3x-ui hysteria inbound (version 2), UDP, ALPN h3 | **salamander UDP obfuscation** (finalmask) for DPI resistance, TLS cert of the panel domain, masquerade serves the fake site over HTTP/3 |
+| **Hysteria2** | native 3x-ui hysteria inbound (version 2), UDP, ALPN h3 | **salamander UDP obfuscation** (finalmask), TLS cert of the panel domain, masquerade serves the fallback site over HTTP/3 |
 
 All five land in one subscription link; the Hysteria2 link exports
 `obfs=salamander&obfs-password=...`, the XHTTP links export the modern
 `extra={"mode":"auto","noGRPCHeader":true,...}` parameters.
 
-### Masquerade (web-camouflage) page
+### Masquerade page
 
 Sourced from the **`git_land/`** directory of this repo (`git-login-y2k.html` —
 a GIT sign-in page). It is served on `/` by nginx **and** by the Hysteria2
@@ -47,8 +47,8 @@ fetched from this repo via raw.githubusercontent.
 
 - Linux Debian 12 / Ubuntu 22.04+ (verified on Ubuntu 24.04), root access
 - **TWO domains or subdomains**, both resolving to the server IP:
-  1. For panel, subscriptions, WS/XHTTP/Trojan-XHTTP/Hysteria2 (e.g. `git.example.ru`)
-  2. For REALITY destination (e.g. `set.git.example.ru`)
+  1. For panel, subscriptions, WS/XHTTP/Trojan-XHTTP/Hysteria2 (e.g. `git.example.com`)
+  2. For REALITY destination (e.g. `set.git.example.com`)
 
 ## Install
 
@@ -82,7 +82,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/bvrbedwire/unknxw
 | `-panel` | 1 | panel preset |
 | `-ONLY_CF_IP_ALLOW` | yes/no | restrict access to Cloudflare IPs |
 | `-websub` | 0/1 | custom web sub page variant |
-| `-clash` | 0-3 | clash meta config: 0 ru-bundle, 1 skrepysh, 2 fullproxy without RU, 3 re-filter ECH |
+| `-clash` | 0-3 | clash meta config variant: 0 bundle, 1 skrepysh, 2 fullproxy, 3 re-filter ECH |
 | `-uninstall` | yes | full uninstall |
 
 ## Firewall & tuning
